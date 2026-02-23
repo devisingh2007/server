@@ -136,7 +136,7 @@ app.get("/students/branch/:branchName", (req, res) => {
     const ret = students.find(p => p.branch === branchName);
 
     if (ret) {
-        res.status(200).json(ret); 
+        res.status(200).json(ret);
     } else {
         res.status(404).json({ message: "Data not found" });
     }

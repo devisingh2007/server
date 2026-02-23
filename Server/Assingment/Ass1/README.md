@@ -52,6 +52,9 @@ This project implements a backend server for managing student academic records. 
 5. Access the API at `http://localhost:3000`.
 
 ## Links
-- **GitHub Repository**: [Your Link Here]
-- **Postman Documentation**: [Your Link Here]
-- **Render Deployment**: [Your Link Here]
+- **GitHub Repository**: [`https://github.com/devisingh2007/server/tree/main/Server/Assingment/Ass1`]
+- **Postman Documentation**: [`https://documenter.getpostman.com/view/50841332/2sBXcGCeE6`]
+- **Render Deployment**: [`https://assignment-1-xxsb.onrender.com`]
+
+## Contact
+- **Author**: Devisingh Rajput

@@ -1,6 +1,10 @@
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
+
+app.use(cors());
+app.use(express.json());
 
 
 const students = [
@@ -77,7 +81,7 @@ const students = [
 ];
 
 app.get("/", (req, res) => {
-   res.status(200).json({ message: "Your assignment 1 server is running" });
+    res.status(200).json({ message: "Your assignment 1 server is running" });
 
 });
 
@@ -109,37 +113,33 @@ app.get("/students/average", (req, res) => {
     }
     avg = sum / students.length;
 
-   res.status(200).json({ averageCGPA: avg });
+    res.status(200).json({ averageCGPA: avg });
 })
 
-app.get("/students/count",(req,res)=>
-{
-    res.status(200).json({ totalStudents: students.length});
+app.get("/students/count", (req, res) => {
+    res.status(200).json({ totalStudents: students.length });
 })
 
-app.get("/students/:id",(req,res)=>
-{
-    const id=Number(req.params.id);
-    const student_detail=students.find(n=>n.id===id);
+app.get("/students/:id", (req, res) => {
+    const id = Number(req.params.id);
+    const student_detail = students.find(n => n.id === id);
 
-    if(!student_detail)
-    {
-        return res.status(404).json({message:"students not found"});
+    if (!student_detail) {
+        return res.status(404).json({ message: "students not found" });
     }
     res.status(200).json(student_detail);
 })
 
 
-app.get("/students/branch/:branchName",(req,res)=>
-{
-     const branchName = req.params.branchName.toUpperCase();
-  const ret = students.find(p => p.branch === branchName);
+app.get("/students/branch/:branchName", (req, res) => {
+    const branchName = req.params.branchName.toUpperCase();
+    const ret = students.find(p => p.branch === branchName);
 
-  if (ret) {
-    res.status(200).json(ret); // ✅ fixed status code
-  } else {
-    res.status(404).json({ message: "Data not found" });
-  }
+    if (ret) {
+        res.status(200).json(ret); 
+    } else {
+        res.status(404).json({ message: "Data not found" });
+    }
 })
 
 

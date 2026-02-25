@@ -290,3 +290,21 @@ let products = [
     rating: 4.2
   }
 ];
+
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "Your assignment 2 server is running" });
+});
+
+app.get('/products', (req, res) => {
+  res.status(200).json(products);
+});
+
+app.get('/products/:id', (req, res) => {
+  const productId = parseInt(req.params.id);
+  const product = products.find(p => p.id === productId);
+  if (product) {
+    res.status(200).json(product);
+  } else {
+    res.status(404).json({ message: "Product not found" });
+  }
+});

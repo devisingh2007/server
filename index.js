@@ -308,3 +308,9 @@ app.get('/products/:id', (req, res) => {
     res.status(404).json({ message: "Product not found" });
   }
 });
+
+app.get('/products/category/:categoryName', (req, res) => {
+  const categoryName = req.params.categoryName.toLowerCase();
+  const filteredProducts = products.filter(p => p.category.toLowerCase() === categoryName);
+  res.status(200).json(filteredProducts);
+});

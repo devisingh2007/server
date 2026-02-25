@@ -348,3 +348,32 @@ app.put('/products/:id', (req, res) => {
   }
 
 });
+app.put('/products/:id/stock', (req, res) => {
+  const productId = parseInt(req.params.id);
+  const productIndex = products.findIndex(p => p.id === productId);
+  if (productIndex !== -1) {
+
+    const { stock } = req.body;
+    products[productIndex].stock = stock || products[productIndex].stock;
+    res.status(200).json(products[productIndex]);
+  } else {
+    res.status(404).json({ message: "Product not found" });
+  }
+});
+
+app.put("/products/:id/price", (req, res) => {
+  const productId = parseInt(req.params.id);
+  const productIndex = products.findIndex(p => p.id === productId);
+  if (productIndex !== -1) {
+    const { price } = req.body;
+    products[productIndex].price = price || products[productIndex].price;
+    res.status(200).json(products[productIndex]);
+  } else {
+    res.status(404).json({ message: "Product not found" });
+  }
+});
+
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

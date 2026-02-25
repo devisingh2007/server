@@ -314,3 +314,17 @@ app.get('/products/category/:categoryName', (req, res) => {
   const filteredProducts = products.filter(p => p.category.toLowerCase() === categoryName);
   res.status(200).json(filteredProducts);
 });
+
+app.post('/products', (req, res) => {
+  const { name, category, price, stock, rating } = req.body;
+  const newProduct = {
+    id: products.length + 1,
+    name,
+    category,
+    price,
+    stock,
+    rating
+  };
+  products.push(newProduct);
+  res.status(201).json(newProduct);
+});

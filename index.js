@@ -328,3 +328,23 @@ app.post('/products', (req, res) => {
   products.push(newProduct);
   res.status(201).json(newProduct);
 });
+
+app.put('/products/:id', (req, res) => {
+  const productId = parseInt(req.params.id);
+  const productIndex = products.findIndex(p => p.id === productId);
+  if (productIndex !== -1) {
+    const { name, category, price, stock, rating } = req.body;
+    products[productIndex] = {
+      id: productId,
+      name,
+      category,
+      price,
+      stock,
+      rating
+    };
+    res.status(200).json(products[productIndex]);
+  } else {
+    res.status(404).json({ message: "Product not found" });
+  }
+
+});

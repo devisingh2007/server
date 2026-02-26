@@ -1,0 +1,19 @@
+{
+  "name": "ass1",
+  "version": "1.0.0",
+  "description": "\"my first assignment\"",
+  "license": "ISC",
+  "author": "\"devisingh\"",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14",
+    "twilio": "^5.12.2"
+  }
+}

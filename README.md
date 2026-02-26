@@ -100,9 +100,10 @@ All products follow this schema:
 
 | Requirement | Description | Link |
 | :--- | :--- | :--- |
-| **🐙 GitHub Repository** | Public repository with clean structure and README | [Link to Repo Here] |
-| **📮 Postman Documentation** | Documented 7 routes with sample payloads/responses | [Link to Postman Docs Here] |
-| **🌍 Render Deployment** | Live Public API (no localhost references) | [Link to Live API Here] |
+| **🐙 GitHub Repository** | Public repository with clean structure and README | [https://github.com/devisingh2007/server/tree/main/Server/Assingment/Ass2](https://github.com/devisingh2007/server/tree/main/Server/Assingment/Ass2) | 
+| **📮 Postman Documentation** | Documented 7 routes with sample payloads/responses | [https://documenter.getpostman.com/view/29629517/7X5JN56X](https://documenter.getpostman.com/view/29629517/7X5JN56X) |
+| **📮 Postman Documentation** | Documented 7 routes with sample payloads/responses | [](https://documenter.getpostman.com/view/29629517/7X5JN56X) |
+| **🌍 Render Deployment** | Live Public API (no localhost references) | [https://assignment-2-ye4h.onrender.com](https://assignment-2-ye4h.onrender.com) |
 
 ---
 

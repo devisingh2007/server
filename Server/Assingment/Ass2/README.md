@@ -102,7 +102,6 @@ All products follow this schema:
 | :--- | :--- | :--- |
 | **🐙 GitHub Repository** | Public repository with clean structure and README | [https://github.com/devisingh2007/server/tree/main/Server/Assingment/Ass2](https://github.com/devisingh2007/server/tree/main/Server/Assingment/Ass2) | 
 | **📮 Postman Documentation** | Documented 7 routes with sample payloads/responses | [https://documenter.getpostman.com/view/50841332/2sBXcGFLPC](https://documenter.getpostman.com/view/50841332/2sBXcGFLPC) |
-
 | **🌍 Render Deployment** | Live Public API (no localhost references) | [https://assignment-2-ye4h.onrender.com](https://assignment-2-ye4h.onrender.com) |
 
 ---

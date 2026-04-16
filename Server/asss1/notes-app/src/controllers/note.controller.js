@@ -43,6 +43,35 @@ const createNote = async (req, res) => {
   }
 };
 
+const createNotesBulk = async (req, res) => {
+  try {
+    const { notes } = req.body;
+
+    if (!Array.isArray(notes) || notes.length === 0) {
+      return sendResponse(
+        res,
+        400,
+        false,
+        "Notes array is required and cannot be empty",
+        null
+      );
+    }
+
+    const createdNotes = await Note.insertMany(notes);
+
+    return sendResponse(
+      res,
+      201,
+      true,
+      `${createdNotes.length} notes created successfully`,
+      createdNotes
+    );
+  } catch (error) {
+    return handleControllerError(res, error);
+  }
+};
+
 module.exports = {
   createNote,
+  createNotesBulk,
 };

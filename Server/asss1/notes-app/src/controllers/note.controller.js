@@ -105,9 +105,52 @@ const getNoteById = async (req, res) => {
   }
 };
 
+const replaceNote = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, content, category, isPinned } = req.body;
+
+    if (isInvalidObjectId(id)) {
+      return sendResponse(res, 400, false, "Invalid note ID", null);
+    }
+
+    if (isBlank(title) || isBlank(content)) {
+      return sendResponse(
+        res,
+        400,
+        false,
+        "Title and content are required",
+        null
+      );
+    }
+
+    const replacement = {
+      title,
+      content,
+      category: category === undefined ? "personal" : category,
+      isPinned: isPinned === undefined ? false : isPinned,
+    };
+
+    const note = await Note.findByIdAndUpdate(id, replacement, {
+      new: true,
+      overwrite: true,
+      runValidators: true,
+    });
+
+    if (!note) {
+      return sendResponse(res, 404, false, "Note not found", null);
+    }
+
+    return sendResponse(res, 200, true, "Note replaced successfully", note);
+  } catch (error) {
+    return handleControllerError(res, error);
+  }
+};
+
 module.exports = {
   createNote,
   createNotesBulk,
   getAllNotes,
   getNoteById,
+  replaceNote,
 };

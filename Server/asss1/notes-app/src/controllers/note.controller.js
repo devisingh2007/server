@@ -202,6 +202,26 @@ const updateNote = async (req, res) => {
   }
 };
 
+const deleteNote = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (isInvalidObjectId(id)) {
+      return sendResponse(res, 400, false, "Invalid note ID", null);
+    }
+
+    const note = await Note.findByIdAndDelete(id);
+
+    if (!note) {
+      return sendResponse(res, 404, false, "Note not found", null);
+    }
+
+    return sendResponse(res, 200, true, "Note deleted successfully", null);
+  } catch (error) {
+    return handleControllerError(res, error);
+  }
+};
+
 module.exports = {
   createNote,
   createNotesBulk,
@@ -209,4 +229,5 @@ module.exports = {
   getNoteById,
   replaceNote,
   updateNote,
+  deleteNote,
 };

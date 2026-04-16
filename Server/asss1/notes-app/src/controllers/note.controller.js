@@ -21,6 +21,10 @@ const handleControllerError = (res, error) => {
   return sendResponse(res, 500, false, "Something went wrong", null);
 };
 
+const isInvalidObjectId = (id) => {
+  return !Note.db.base.Types.ObjectId.isValid(id);
+};
+
 const createNote = async (req, res) => {
   try {
     const { title, content, category, isPinned } = req.body;
@@ -81,8 +85,29 @@ const getAllNotes = async (req, res) => {
   }
 };
 
+const getNoteById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (isInvalidObjectId(id)) {
+      return sendResponse(res, 400, false, "Invalid note ID", null);
+    }
+
+    const note = await Note.findById(id);
+
+    if (!note) {
+      return sendResponse(res, 404, false, "Note not found", null);
+    }
+
+    return sendResponse(res, 200, true, "Note fetched successfully", note);
+  } catch (error) {
+    return handleControllerError(res, error);
+  }
+};
+
 module.exports = {
   createNote,
   createNotesBulk,
   getAllNotes,
+  getNoteById,
 };

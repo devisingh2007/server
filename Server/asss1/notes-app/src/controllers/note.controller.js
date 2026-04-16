@@ -71,7 +71,18 @@ const createNotesBulk = async (req, res) => {
   }
 };
 
+const getAllNotes = async (req, res) => {
+  try {
+    const notes = await Note.find();
+
+    return sendResponse(res, 200, true, "Notes fetched successfully", notes);
+  } catch (error) {
+    return handleControllerError(res, error);
+  }
+};
+
 module.exports = {
   createNote,
   createNotesBulk,
+  getAllNotes,
 };

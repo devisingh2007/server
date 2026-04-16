@@ -147,10 +147,66 @@ const replaceNote = async (req, res) => {
   }
 };
 
+const updateNote = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updates = {};
+    const allowedFields = ["title", "content", "category", "isPinned"];
+
+    if (isInvalidObjectId(id)) {
+      return sendResponse(res, 400, false, "Invalid note ID", null);
+    }
+
+    for (const field of allowedFields) {
+      if (Object.prototype.hasOwnProperty.call(req.body, field)) {
+        updates[field] = req.body[field];
+      }
+    }
+
+    if (Object.keys(updates).length === 0) {
+      return sendResponse(
+        res,
+        400,
+        false,
+        "No fields provided to update",
+        null
+      );
+    }
+
+    if (
+      Object.prototype.hasOwnProperty.call(updates, "title") &&
+      isBlank(updates.title)
+    ) {
+      return sendResponse(res, 400, false, "Title cannot be empty", null);
+    }
+
+    if (
+      Object.prototype.hasOwnProperty.call(updates, "content") &&
+      isBlank(updates.content)
+    ) {
+      return sendResponse(res, 400, false, "Content cannot be empty", null);
+    }
+
+    const note = await Note.findByIdAndUpdate(id, updates, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!note) {
+      return sendResponse(res, 404, false, "Note not found", null);
+    }
+
+    return sendResponse(res, 200, true, "Note updated successfully", note);
+  } catch (error) {
+    return handleControllerError(res, error);
+  }
+};
+
 module.exports = {
   createNote,
   createNotesBulk,
   getAllNotes,
   getNoteById,
   replaceNote,
+  updateNote,
 };

@@ -129,7 +129,62 @@ const getNoteById = async (req, res) => {
   }
 };
 
-const replaceNote = (req, res) => res.status(501).send("Not Implemented");
+// @desc    Replace a note completely
+// @route   PUT /api/notes/:id
+// @access  Public
+const replaceNote = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, content, category, isPinned } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid Note ID format",
+        data: null,
+      });
+    }
+
+    // Every field must be provided for PUT (standard REST)
+    // However, Mongoose overwrite usually needs the full object.
+    // If fields are missing in req.body, they will be removed/reset if overwrite: true.
+    
+    if (!title || !content) {
+       return res.status(400).json({
+         success: false,
+         message: "Title and content are required for full replacement",
+         data: null,
+       });
+    }
+
+    const note = await Note.findByIdAndUpdate(
+      id,
+      { title, content, category, isPinned },
+      { new: true, overwrite: true, runValidators: true }
+    );
+
+    if (!note) {
+      return res.status(404).json({
+        success: false,
+        message: "Note not found",
+        data: null,
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Note replaced successfully",
+      data: note,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Server Error",
+      data: null,
+    });
+  }
+};
+
 const updateNote = (req, res) => res.status(501).send("Not Implemented");
 const deleteNote = (req, res) => res.status(501).send("Not Implemented");
 const deleteNotesBulk = (req, res) => res.status(501).send("Not Implemented");

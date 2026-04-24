@@ -67,7 +67,27 @@ const createNotesBulk = async (req, res) => {
   }
 };
 
-const getAllNotes = (req, res) => res.status(501).send("Not Implemented");
+// @desc    Get all notes
+// @route   GET /api/notes
+// @access  Public
+const getAllNotes = async (req, res) => {
+  try {
+    const notes = await Note.find();
+
+    res.status(200).json({
+      success: true,
+      message: "Notes fetched successfully",
+      data: notes,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Server Error",
+      data: null,
+    });
+  }
+};
+
 const getNoteById = (req, res) => res.status(501).send("Not Implemented");
 const replaceNote = (req, res) => res.status(501).send("Not Implemented");
 const updateNote = (req, res) => res.status(501).send("Not Implemented");

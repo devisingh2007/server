@@ -36,14 +36,51 @@ const createNote = async (req, res) => {
   }
 };
 
+// @desc    Create multiple notes
+// @route   POST /api/notes/bulk
+// @access  Public
+const createNotesBulk = async (req, res) => {
+  try {
+    const { notes } = req.body;
+
+    if (!notes || !Array.isArray(notes) || notes.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Notes array is required and cannot be empty",
+        data: null,
+      });
+    }
+
+    const createdNotes = await Note.insertMany(notes);
+
+    res.status(201).json({
+      success: true,
+      message: `${createdNotes.length} notes created successfully`,
+      data: createdNotes,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Server Error",
+      data: null,
+    });
+  }
+};
+
+const getAllNotes = (req, res) => res.status(501).send("Not Implemented");
+const getNoteById = (req, res) => res.status(501).send("Not Implemented");
+const replaceNote = (req, res) => res.status(501).send("Not Implemented");
+const updateNote = (req, res) => res.status(501).send("Not Implemented");
+const deleteNote = (req, res) => res.status(501).send("Not Implemented");
+const deleteNotesBulk = (req, res) => res.status(501).send("Not Implemented");
+
 module.exports = {
   createNote,
-  // Placeholders for others to keep the export structure working
-  createNotesBulk: (req, res) => res.status(501).send("Not Implemented"),
-  getAllNotes: (req, res) => res.status(501).send("Not Implemented"),
-  getNoteById: (req, res) => res.status(501).send("Not Implemented"),
-  replaceNote: (req, res) => res.status(501).send("Not Implemented"),
-  updateNote: (req, res) => res.status(501).send("Not Implemented"),
-  deleteNote: (req, res) => res.status(501).send("Not Implemented"),
-  deleteNotesBulk: (req, res) => res.status(501).send("Not Implemented"),
+  createNotesBulk,
+  getAllNotes,
+  getNoteById,
+  replaceNote,
+  updateNote,
+  deleteNote,
+  deleteNotesBulk,
 };

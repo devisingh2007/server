@@ -185,7 +185,57 @@ const replaceNote = async (req, res) => {
   }
 };
 
-const updateNote = (req, res) => res.status(501).send("Not Implemented");
+// @desc    Update specific fields only
+// @route   PATCH /api/notes/:id
+// @access  Public
+const updateNote = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid Note ID format",
+        data: null,
+      });
+    }
+
+    if (Object.keys(req.body).length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No fields provided to update",
+        data: null,
+      });
+    }
+
+    const note = await Note.findByIdAndUpdate(
+      id,
+      { $set: req.body },
+      { new: true, runValidators: true }
+    );
+
+    if (!note) {
+      return res.status(404).json({
+        success: false,
+        message: "Note not found",
+        data: null,
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Note updated successfully",
+      data: note,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Server Error",
+      data: null,
+    });
+  }
+};
+
 const deleteNote = (req, res) => res.status(501).send("Not Implemented");
 const deleteNotesBulk = (req, res) => res.status(501).send("Not Implemented");
 
